@@ -6,12 +6,11 @@ pterm(f1(X)) :- pterm(X).
 %Problem 2 - Legal
 
 % Base Cases
-legal(null).
-legal(f1(null)).
+legal(null).      % Null is legal
+legal(f1(null)).  % Binary 1 is legal
+legal(f0(null)).  % Binary 0 is legal
 
 % Recursive Cases
-legal(f1(X)) :- legal(X).
-legal(f0(X)) :- false.
-legal(f1(f0(null))) :- false.
-legal(f0(X)) :- legal(X), X == null.
+legal(f1(X)) :- legal(X), X \= f0(null).    % Legal if f0(null) does not occurr at the end
+legal(f0(X)) :- legal(X).                   % Everything following 0 is legal
 
