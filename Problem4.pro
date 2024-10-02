@@ -34,13 +34,12 @@ mult(P1, f0(null), f0(null)).  % P1 * 0 = 0
 mult(f1(null), P2, P2).        % 1 * P2 = P2
 mult(P1, f1(null), P1).        % P2 * 1 = P2
 
-% Recursive Multiplication Cases
-mult(P1, f0(X), Result) :-     % P1 * 0
-    mult(P1, X, Intermediate),   % Recurse with X
-    add(Intermediate, Intermediate, Result). % P1 * 0 = 0 (added twice)
-    
-mult(P1, f1(X), Result) :-     % P1 * (X + 1)
-    mult(P1, X, Intermediate),    % Recurse with X
-    add(Intermediate, P1, Result). % P1 * (X + 1) = P1 * X + P1
+% Recursive Multiplication by an Even Number
+mult(f0(X), P2, f0(Result)) :-
+    mult(X, P2, Result).  % Shifted result (multiply X by P2 and prepend f0)
 
+% Recursive Multiplication by an Odd Number
+mult(f1(X), P2, Z) :-
+    mult(X, P2, ShiftedResult),       % Recursive multiplication of X and P2
+    add(P2, f0(ShiftedResult), Z).    % Add P2 to the shifted result
 

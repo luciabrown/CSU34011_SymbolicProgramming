@@ -26,3 +26,7 @@ add(f1(X), f1(Y), Z) :-
     add(X, Y, Intermediate),                           % X + Y = intermediate
     add(f1(null), Intermediate, Result),              % 1 + intermediate must be even
     Z = f0(Result).                                   % Z must be even
+
+% Even + Even
+add(f0(X), f0(Y), f0(Z)) :-
+    add(X, Y, Z).    % X + Y = Z
