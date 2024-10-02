@@ -7,6 +7,10 @@ pterm(f1(X)) :- pterm(X).
 % https://youtu.be/xHWKYFhhtJQ?si=q35NtGDfyG3dBNj- 
 
 % Base Cases
+add(null, P2, P2).  % null + P2 = P2
+add(P1, null, P1).  % P1 + null = P1    
+add(f0(null), P2, P2).  % 0 + P2 = P2
+add(P1, f0(null), P1).  % P1 + 0 = P1
 mult(null, P2, null).          % null * P2 = null
 mult(P1, null, null).          % P1 * null = null    
 mult(f0(null), P2, f0(null)).  % 0 * P2 = 0
@@ -14,10 +18,25 @@ mult(P1, f0(null), f0(null)).  % P1 * 0 = 0
 mult(f1(null), P2, P2).        % 1 * P2 = P2
 mult(P1, f1(null), P1).        % P2 * 1 = P2
 
-% Odd * Odd = Odd
+% Even + Odd ADD
+add(f0(X), f1(Y), Z) :-                             
+    add(X, Y, Intermediate), Z = f1(Intermediate).    % X + Y = intermediate
 
-% Even * Even = Even
+% Odd + Even ADD
+add(f1(X), f0(Y), Z) :-                             
+    add(X, Y, Intermediate), Z = f1(Intermediate).    % X + Y = intermediate
 
-% Even * Odd = Even
+% Odd + Odd ADD
+add(f1(X), f1(Y), Z) :-                               
+    add(X, Y, Intermediate),                           % X + Y = intermediate
+    add(f1(null), Intermediate, Result),              % 1 + intermediate must be even
+    Z = f0(Result).                                   % Z must be even
 
-% Odd * Even = Even
+
+% Odd * Odd = Odd MULT
+
+% Even * Even = Even MULT
+
+% Even * Odd = Even MULT
+
+% Odd * Even = Even MULT
