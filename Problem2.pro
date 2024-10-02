@@ -14,9 +14,6 @@ legal(f0(null)).  % Binary 0 is legal
 legal(f1(X)) :- legal(X), X \= f0(null).    % Legal if f0(null) does not occurr at the end
 legal(f0(X)) :- legal(X).                   % Everything following 0 is legal
 
-
-
-
 % Problem 2 - incrR - Checks if all parts of the incr are legal
 % Base Cases
 incrR(f0(null), f1(null)) :- legal(f0(null)), legal(f1(null)).               % 0 + 1 = 1 if 0 is legal & 1 is legal

@@ -11,12 +11,6 @@ add(null, P2, P2).  % null + P2 = P2
 add(P1, null, P1).  % P1 + null = P1    
 add(f0(null), P2, P2).  % 0 + P2 = P2
 add(P1, f0(null), P1).  % P1 + 0 = P1
-mult(null, P2, null).          % null * P2 = null
-mult(P1, null, null).          % P1 * null = null    
-mult(f0(null), P2, f0(null)).  % 0 * P2 = 0
-mult(P1, f0(null), f0(null)).  % P1 * 0 = 0
-mult(f1(null), P2, P2).        % 1 * P2 = P2
-mult(P1, f1(null), P1).        % P2 * 1 = P2
 
 % Even + Odd ADD
 add(f0(X), f1(Y), Z) :-                             
@@ -33,10 +27,20 @@ add(f1(X), f1(Y), Z) :-
     Z = f0(Result).                                   % Z must be even
 
 
-% Odd * Odd = Odd MULT
+mult(null, P2, null).          % null * P2 = null
+mult(P1, null, null).          % P1 * null = null    
+mult(f0(null), P2, f0(null)).  % 0 * P2 = 0
+mult(P1, f0(null), f0(null)).  % P1 * 0 = 0
+mult(f1(null), P2, P2).        % 1 * P2 = P2
+mult(P1, f1(null), P1).        % P2 * 1 = P2
 
-% Even * Even = Even MULT
+% Recursive Multiplication Cases
+mult(P1, f0(X), Result) :-     % P1 * 0
+    mult(P1, X, Intermediate),   % Recurse with X
+    add(Intermediate, Intermediate, Result). % P1 * 0 = 0 (added twice)
+    
+mult(P1, f1(X), Result) :-     % P1 * (X + 1)
+    mult(P1, X, Intermediate),    % Recurse with X
+    add(Intermediate, P1, Result). % P1 * (X + 1) = P1 * X + P1
 
-% Even * Odd = Even MULT
 
-% Odd * Even = Even MULT
