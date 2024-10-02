@@ -28,5 +28,5 @@ add(f1(X), f1(Y), Z) :-
     Z = f0(Result).                                   % Z must be even
 
 % Even + Even
-add(f0(X), f0(Y), f0(Z)) :-
+add(f0(X), f0(Y), f0(Z)) :-                            % No carry for even
     add(X, Y, Z).    % X + Y = Z

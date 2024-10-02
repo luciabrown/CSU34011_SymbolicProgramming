@@ -26,6 +26,10 @@ add(f1(X), f1(Y), Z) :-
     add(f1(null), Intermediate, Result),              % 1 + intermediate must be even
     Z = f0(Result).                                   % Z must be even
 
+% Even + Even ADD
+add(f0(X), f0(Y), f0(Z)) :-                            % No carry for even
+    add(X, Y, Z).    % X + Y = Z
+
 
 mult(null, P2, null).          % null * P2 = null
 mult(P1, null, null).          % P1 * null = null    
@@ -35,11 +39,10 @@ mult(f1(null), P2, P2).        % 1 * P2 = P2
 mult(P1, f1(null), P1).        % P2 * 1 = P2
 
 % Recursive Multiplication by an Even Number
-mult(f0(X), P2, f0(Result)) :-
-    mult(X, P2, Result).  % Shifted result (multiply X by P2 and prepend f0)
+mult(f0(X), P2, f0(Z)) :- mult(X, P2, Z).                % Even number multiplication, add 0 to result
 
 % Recursive Multiplication by an Odd Number
 mult(f1(X), P2, Z) :-
-    mult(X, P2, ShiftedResult),       % Recursive multiplication of X and P2
-    add(P2, f0(ShiftedResult), Z).    % Add P2 to the shifted result
+    mult(X, P2, ShiftedResult),                          % Shift bits, same as even mult
+    add(P2, f0(ShiftedResult), Z).                       % Add P2 back to result
 
