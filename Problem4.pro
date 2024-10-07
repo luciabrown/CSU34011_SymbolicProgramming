@@ -45,4 +45,3 @@ mult(f0(X), P2, f0(Z)) :- mult(X, P2, Z).                % Even number multiplic
 mult(f1(X), P2, Z) :-
     mult(X, P2, ShiftedResult),                          % Shift bits, same as even mult
     add(P2, f0(ShiftedResult), Z).                       % Add P2 back to result
-
