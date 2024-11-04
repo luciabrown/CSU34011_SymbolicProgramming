@@ -1,9 +1,12 @@
 % PROBLEM 4
 
-% Accept 
+% Given in the question predicates
 accept(L) :- steps(q0,L,F), final(F).
 steps(Q,[],Q).
 steps(Q,[H|T],Q2) :- tran(Q,H,Qn), steps(Qn,T,Q2).
+
+numeral(0).
+numeral(succ(X)) :- numeral(X).
 
 % Tran : Non-accepting states
 % q0 initial state
@@ -42,3 +45,19 @@ q2 --> [1], q3.  % Transition to q3 with suffix 101 or 111
 q3 --> [0], q3.  % Remain in q3 with `0`
 q3 --> [1], q3.  % Remain in q3 with `1`
 q3 --> [].       % Accept the string as it is
+
+% String Numeral predicate
+
+% Define the main predicate l3(String, Numeral)
+l3(String, Numeral) :- 
+    numeral(Numeral),                % valid numeral
+    numeral_length(Numeral, Length), % get length
+    length(String, Length),           % Check string has that length
+    q0(String, []).                    % Check if String belongs to L3 using the DCG
+
+% Helper predicate to convert numeral to length
+% Base case: numeral 0 corresponds to length 0
+numeral_length(0, 0).                          
+
+% Get length of predecessor and increment
+numeral_length(succ(X), L) :-numeral_length(X, L1),L is L1 + 1.                             
